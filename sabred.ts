@@ -1,5 +1,6 @@
 import { colors } from "https://deno.land/x/cliffy@v0.20.1/ansi/colors.ts";
 import { basename } from "https://deno.land/std@0.126.0/path/mod.ts";
+// import { Input } from "https://deno.land/x/cliffy@v0.20.1/prompt/mod.ts";
 
 const rocketEmoji = "🚀"
 const infoEmoji = "❕"
@@ -28,7 +29,7 @@ const findSabreJar = async (): Promise<string | null> => {
 const jar = await findSabreJar()
 
 if (jar == null) {
-    console.log(errorEmoji, colors.red(`Could not find any files with .jar`))
+    console.log(errorEmoji, colors.red(`Could not find any files with .jar in the current working directory.`))
     Deno.exit(0)
 }
 

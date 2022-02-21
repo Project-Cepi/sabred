@@ -1,6 +1,10 @@
 # sabred
 Sabre development tool for easy hot fixes.
 
-## Run
+## Install
 
-deno run --allow-run --allow-read https://raw.githubusercontent.com/Project-Cepi/sabred/main/sabred.ts
+deno install --allow-run --allow-read --unstable -n sabred https://raw.githubusercontent.com/Project-Cepi/sabred/main/sabred.ts
+
+## Quick Run
+
+deno run --allow-run --allow-read --unstable https://raw.githubusercontent.com/Project-Cepi/sabred/main/sabred.ts
