@@ -14,7 +14,6 @@ const findSabreJar = async (): Promise<string | null> => {
         if (!dirEntry.name.endsWith(".jar")) continue
 
         // Get the sum of all the character codes
-
         const score = dirEntry.name.split("").map(it => it.charCodeAt(0)).reduce((a, b) => a + b)
 
         if (score > bestVersionScore) {
@@ -39,6 +38,7 @@ const grabSabreCommand = async (): Promise<Deno.Process> => {
     console.log("")
     console.log(rocketEmoji, colors.blue(`Starting sabre...`))
 
+    // Kill any existing process on the port.
     const killCommand = Deno.run({ 
         cmd: ["fuser", "-k", "25565/tcp"],
         stderr: "piped"
