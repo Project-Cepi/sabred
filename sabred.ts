@@ -60,9 +60,9 @@ ensureDir("./extensions")
 
 const watch = async() => {
 
-    console.log(rocketEmoji, colors.brightBlue("Watching ./extensions"))
+    console.log(rocketEmoji, colors.brightBlue("Watching ./extensions, ./sabre-config.json"))
     
-    const watcher = Deno.watchFs("./extensions");
+    const watcher = Deno.watchFs(["./extensions", "./sabre-config.json"]);
 
     for await (const event of watcher) {
         if (event.kind === "modify" || event.kind === "create") {
