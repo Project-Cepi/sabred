@@ -7,7 +7,7 @@ const rocketEmoji = "🚀"
 const infoEmoji = "❕"
 const errorEmoji = "❌"
 
-const parseOrNull = (content: string): Object | null => {
+const parseOrNull = (content: string): any | null => {
     try {
         return JSON.parse(content)
     } catch (exception) {
@@ -17,7 +17,7 @@ const parseOrNull = (content: string): Object | null => {
 
 const config = parseOrNull(await Deno.readTextFile("./sabre-config.json"))
 
-if (!config.lan) {
+if (!config?.lan) {
     const shouldAddLan = await Confirm.prompt("No LAN property was found in the config. Would you like to add it?")
 
     if (shouldAddLan) {
