@@ -21,7 +21,7 @@ if (!config.lan) {
     const shouldAddLan = Confirm.prompt("No LAN property was found in the config. Would you like to add it?")
 
     if (shouldAddLan) {
-        Deno.writeTextFile("./sabre-config.json", JSON.stringify(Object.assign(config, { lan: true, lanPingDelay: 0.5 }))
+        Deno.writeTextFile("./sabre-config.json", JSON.stringify(Object.assign(config, { lan: true, lanPingDelay: 0.5 })))
     }
 }
 
