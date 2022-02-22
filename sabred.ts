@@ -1,11 +1,29 @@
 import { colors } from "https://deno.land/x/cliffy@v0.20.1/ansi/colors.ts";
 import { basename } from "https://deno.land/std@0.126.0/path/mod.ts";
 import { ensureDir } from "https://deno.land/std@0.126.0/fs/mod.ts";
-// import { Input } from "https://deno.land/x/cliffy@v0.20.1/prompt/mod.ts";
+import { Input, Confirm } from "https://deno.land/x/cliffy@v0.20.1/prompt/mod.ts";
 
 const rocketEmoji = "🚀"
 const infoEmoji = "❕"
 const errorEmoji = "❌"
+
+const parseOrNull = (content: string): Object | null => {
+    try {
+        return JSON.parse(content)
+    } catch (exception) {
+        return null
+    }
+}
+
+const config = parseOrNull(await Deno.readTextFile("./sabre-config.json"))
+
+if (!config.lan) {
+    const shouldAddLan = Confirm.prompt("No LAN property was found in the config. Would you like to add it?")
+
+    if (shouldAddLan) {
+        Deno.writeTextFile("./sabre-config.json", JSON.stringify(Object.assign(config, { lan: true, lanPingDelay: 0.5 }))
+    }
+}
 
 const findSabreJar = async (): Promise<string | null> => {	
 
