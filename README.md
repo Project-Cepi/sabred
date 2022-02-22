@@ -8,6 +8,7 @@ Install:
 
 Force Update:
 `deno install --allow-run --allow-read --unstable -f -n sabred https://raw.githubusercontent.com/Project-Cepi/sabred/main/sabred.ts`
+
 Make sure to add deno's binaries to your PATH --
 
 `export PATH="$HOME/.deno/bin:$PATH` - normal command
