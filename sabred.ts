@@ -18,10 +18,10 @@ const parseOrNull = (content: string): Object | null => {
 const config = parseOrNull(await Deno.readTextFile("./sabre-config.json"))
 
 if (!config.lan) {
-    const shouldAddLan = Confirm.prompt("No LAN property was found in the config. Would you like to add it?")
+    const shouldAddLan = await Confirm.prompt("No LAN property was found in the config. Would you like to add it?")
 
     if (shouldAddLan) {
-        Deno.writeTextFile("./sabre-config.json", JSON.stringify(Object.assign(config, { lan: true, lanPingDelay: 0.5 })))
+        await Deno.writeTextFile("./sabre-config.json", JSON.stringify(Object.assign(config, { lan: true, lanPingDelay: 0.5 })))
     }
 }
 
