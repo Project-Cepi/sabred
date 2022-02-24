@@ -36,6 +36,9 @@ const findSabreJar = async (): Promise<string | null> => {
     let chosenFile: string | null = null
 
     for await (const dirEntry of Deno.readDir(Deno.cwd())) {
+
+        if (dirEntry.isDirectory) continue
+
         if (!dirEntry.name.endsWith(".jar")) continue
 
         // Get the sum of all the character codes
@@ -102,5 +105,9 @@ while(true) {
 
     currentCommand = command
 
-    await command.status()
+    const status = await command.status()
+
+    if (status.code !== 0) {
+        console.log(errorEmoji, colors.red(`Command exited with exit code ${status.code}.`))
+    }
 }
