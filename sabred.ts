@@ -1,16 +1,21 @@
 import { colors } from "https://deno.land/x/cliffy@v0.20.1/ansi/colors.ts";
 import { basename } from "https://deno.land/std@0.126.0/path/mod.ts";
 import { ensureDir } from "https://deno.land/std@0.126.0/fs/mod.ts";
-import { Input, Confirm } from "https://deno.land/x/cliffy@v0.20.1/prompt/mod.ts";
+import { Confirm } from "https://deno.land/x/cliffy@v0.20.1/prompt/mod.ts";
 
 const rocketEmoji = "🚀"
 const infoEmoji = "❕"
 const errorEmoji = "❌"
 
-const parseOrNull = (content: string): any | null => {
+interface SabreConfig {
+    lan: boolean,
+    lanPingDelay: number
+}
+
+const parseOrNull = (content: string): SabreConfig | null => {
     try {
-        return JSON.parse(content)
-    } catch (exception) {
+        return JSON.parse(content) as SabreConfig
+    } catch {
         return null
     }
 }
