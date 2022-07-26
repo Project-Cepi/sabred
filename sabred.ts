@@ -1,6 +1,4 @@
-import { colors } from "https://deno.land/x/cliffy@v0.20.1/ansi/colors.ts";
-import { basename } from "https://deno.land/std@0.126.0/path/mod.ts";
-import { ensureDir } from "https://deno.land/std@0.126.0/fs/mod.ts";
+import { basename } from "https://deno.land/std@0.147.0/path/mod.ts";
 import { Confirm } from "https://deno.land/x/cliffy@v0.20.1/prompt/mod.ts";
 
 const rocketEmoji = "🚀"
@@ -26,7 +24,7 @@ if (!config?.lan) {
     const shouldAddLan = await Confirm.prompt("No LAN property was found in the config. Would you like to add it?")
 
     if (shouldAddLan) {
-        await Deno.writeTextFile("./sabre-config.json", JSON.stringify(Object.assign(config, { lan: true, lanPingDelay: 0.5 })))
+        await Deno.writeTextFile("./sabre-config.json", JSON.stringify({ ...config, ...{ lan: true, lanPingDelay: 0.5 } }))
     }
 }
 
@@ -56,15 +54,15 @@ const findSabreJar = async (): Promise<string | null> => {
 const jar = await findSabreJar()
 
 if (jar == null) {
-    console.log(errorEmoji, colors.red(`Could not find any files with .jar in the current working directory.`))
+    console.log(errorEmoji, `%cCould not find any files with .jar in the current working directory.`, "color: red")
     Deno.exit(1)
 }
 
-console.log(infoEmoji, colors.blue(`Using jar ${basename(jar)}`))
+console.log(infoEmoji, `%cUsing jar ${basename(jar)}`, "color: blue")
 
 const grabSabreCommand = async (): Promise<Deno.Process> => {
     console.log("")
-    console.log(rocketEmoji, colors.blue(`Starting sabre...`))
+    console.log(rocketEmoji, `%cStarting sabre...`, "color: blue")
 
     // Kill any existing process on the port.
     const killCommand = Deno.run({ 
@@ -81,12 +79,11 @@ const grabSabreCommand = async (): Promise<Deno.Process> => {
 }
 
 let currentCommand: Deno.Process | null = null
+await Deno.mkdir("./extensions", { recursive: true });
 
-ensureDir("./extensions")
+const watch = async () => {
 
-const watch = async() => {
-
-    console.log(rocketEmoji, colors.brightBlue("Watching ./extensions, ./sabre-config.json"))
+    console.log(rocketEmoji, "%cWatching ./extensions, ./sabre-config.json", "color: blue")
     
     const watcher = Deno.watchFs(["./extensions", "./sabre-config.json"]);
 
@@ -108,6 +105,6 @@ while(true) {
     const status = await command.status()
 
     if (status.code !== 0) {
-        console.log(errorEmoji, colors.red(`Command exited with exit code ${status.code}.`))
+        console.log(errorEmoji, `%cCommand exited with exit code ${status.code}.`, "color: red")
     }
 }
